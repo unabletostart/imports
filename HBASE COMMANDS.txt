@@ -1,0 +1,384 @@
+[cloudera@localhost ~]$ hbase shell
+21/12/24 22:24:51 WARN conf.Configuration: hadoop.native.lib is deprecated. Instead, use io.native.lib.available
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 0.94.6-cdh4.4.0, rUnknown, Tue Sep  3 20:09:51 PDT 2013
+
+
+hbase(main):003:0> create 'emp1', 'personaldata', 'professionaldata'
+0 row(s) in 1.4290 seconds
+
+=> Hbase::Table - emp1
+hbase(main):004:0> list
+TABLE                                                                                                                                                        
+emp1                                                                                                                                                         
+q                                                                                                                                                            
+2 row(s) in 0.0710 seconds
+
+hbase(main):005:0> put 'emp1', 'row1', 'personaldata:name', 'raju'                                                                                           
+0 row(s) in 0.7230 seconds
+
+hbase(main):006:0> put 'emp1', 'row1', 'personaldata:city', 'hyderabad'                                                                                      
+0 row(s) in 0.0180 seconds
+
+hbase(main):007:0> put 'emp1', 'row1', 'personaldata:designation', 'manager'                                                                                 
+0 row(s) in 0.0050 seconds
+
+hbase(main):008:0> put 'emp1', 'row1', 'personaldata:salary', '50000'                                                                                        
+0 row(s) in 0.0050 seconds
+
+hbase(main):009:0> scan 'emp1'
+ROW                                      COLUMN+CELL                                                                                                         
+ row1                                    column=personaldata:city, timestamp=1640413830297, value=hyderabad                                                  
+ row1                                    column=personaldata:designation, timestamp=1640413848133, value=manager                                             
+ row1                                    column=personaldata:name, timestamp=1640413807786, value=raju                                                       
+ row1                                    column=personaldata:salary, timestamp=1640413869533, value=50000                                                    
+1 row(s) in 0.0590 seconds
+
+hbase(main):010:0> put 'emp1', 'row2', 'personaldata:name', 'ravi'                                                                                           
+0 row(s) in 0.0050 seconds
+
+hbase(main):011:0> put 'emp1', 'row2', 'personaldata:city', 'chennai'                                                                                        
+0 row(s) in 0.0050 seconds
+
+hbase(main):012:0> put 'emp1', 'row2', 'personaldata:designation', 'sr.engineer'                                                                             
+0 row(s) in 0.0050 seconds
+
+hbase(main):013:0> put 'emp1', 'row2', 'personaldata:salary', '30000'                                                                                        
+0 row(s) in 0.0040 seconds
+
+hbase(main):014:0> scan 'emp1'                                                                                                                               
+ROW                                      COLUMN+CELL                                                                                                         
+ row1                                    column=personaldata:city, timestamp=1640413830297, value=hyderabad                                                  
+ row1                                    column=personaldata:designation, timestamp=1640413848133, value=manager                                             
+ row1                                    column=personaldata:name, timestamp=1640413807786, value=raju                                                       
+ row1                                    column=personaldata:salary, timestamp=1640413869533, value=50000                                                    
+ row2                                    column=personaldata:city, timestamp=1640413918811, value=chennai                                                    
+ row2                                    column=personaldata:designation, timestamp=1640413941670, value=sr.engineer                                         
+ row2                                    column=personaldata:name, timestamp=1640413899166, value=ravi                                                       
+ row2                                    column=personaldata:salary, timestamp=1640413954892, value=30000                                                    
+2 row(s) in 0.0470 seconds
+
+hbase(main):015:0> put 'emp1', 'row3', 'personaldata:name', 'rajesh'                                                                                         
+0 row(s) in 0.0040 seconds
+
+hbase(main):016:0> put 'emp1', 'row3', 'personaldata:city', 'delhi'                                                                                          
+0 row(s) in 0.0040 seconds
+
+hbase(main):017:0> put 'emp1', 'row3', 'personaldata:designation', 'jr.engineer'                                                                             
+0 row(s) in 0.0060 seconds
+
+hbase(main):018:0> put 'emp1', 'row3', 'personaldata:salary', '25000'                                                                                        
+0 row(s) in 0.0060 seconds
+
+hbase(main):019:0> scan 'emp1'                                                                                                                               
+ROW                                      COLUMN+CELL                                                                                                         
+ row1                                    column=personaldata:city, timestamp=1640413830297, value=hyderabad                                                  
+ row1                                    column=personaldata:designation, timestamp=1640413848133, value=manager                                             
+ row1                                    column=personaldata:name, timestamp=1640413807786, value=raju                                                       
+ row1                                    column=personaldata:salary, timestamp=1640413869533, value=50000                                                    
+ row2                                    column=personaldata:city, timestamp=1640413918811, value=chennai                                                    
+ row2                                    column=personaldata:designation, timestamp=1640413941670, value=sr.engineer                                         
+ row2                                    column=personaldata:name, timestamp=1640413899166, value=ravi                                                       
+ row2                                    column=personaldata:salary, timestamp=1640413954892, value=30000                                                    
+ row3                                    column=personaldata:city, timestamp=1640414419191, value=delhi                                                      
+ row3                                    column=personaldata:designation, timestamp=1640414437230, value=jr.engineer                                         
+ row3                                    column=personaldata:name, timestamp=1640414388113, value=rajesh                                                     
+ row3                                    column=personaldata:salary, timestamp=1640414455827, value=25000                                                    
+3 row(s) in 0.0720 seconds
+
+hbase(main):020:0> get 'emp1', 'row3'
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640414419191, value=delhi                                                                                
+ personaldata:designation                timestamp=1640414437230, value=jr.engineer                                                                          
+ personaldata:name                       timestamp=1640414388113, value=rajesh                                                                               
+ personaldata:salary                     timestamp=1640414455827, value=25000                                                                                
+4 row(s) in 0.0150 seconds
+
+hbase(main):024:0> get 'emp1', 'row3', {COLUMN=>'personaldata:city'}                                                                                         
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640414419191, value=delhi                                                                                
+1 row(s) in 0.0080 seconds
+
+hbase(main):025:0> put 'emp1', 'row3', 'personaldata:city', 'NEW DELHI'                                                                                      
+0 row(s) in 0.0050 seconds
+
+hbase(main):026:0> get 'emp1', 'row3'                                                                                                                        
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640414845078, value=NEW DELHI                                                                            
+ personaldata:designation                timestamp=1640414437230, value=jr.engineer                                                                          
+ personaldata:name                       timestamp=1640414388113, value=rajesh                                                                               
+ personaldata:salary                     timestamp=1640414455827, value=25000                                                                                
+4 row(s) in 0.0120 seconds
+
+hbase(main):027:0> disable 'emp1'
+0 row(s) in 2.0740 seconds
+
+hbase(main):028:0> list
+TABLE                                                                                                                                                        
+emp1                                                                                                                                                         
+q                                                                                                                                                            
+2 row(s) in 0.0350 seconds
+
+hbase(main):029:0> scan 'emp1'
+ROW                                      COLUMN+CELL                                                                                                         
+
+ERROR: org.apache.hadoop.hbase.DoNotRetryIOException: emp1 is disabled.
+
+hbase(main):030:0> enable 'emp1'
+0 row(s) in 2.0710 seconds
+
+hbase(main):031:0> scan 'emp1'
+ROW                                      COLUMN+CELL                                                                                                         
+ row1                                    column=personaldata:city, timestamp=1640413830297, value=hyderabad                                                  
+ row1                                    column=personaldata:designation, timestamp=1640413848133, value=manager                                             
+ row1                                    column=personaldata:name, timestamp=1640413807786, value=raju                                                       
+ row1                                    column=personaldata:salary, timestamp=1640413869533, value=50000                                                    
+ row2                                    column=personaldata:city, timestamp=1640413918811, value=chennai                                                    
+ row2                                    column=personaldata:designation, timestamp=1640413941670, value=sr.engineer                                         
+ row2                                    column=personaldata:name, timestamp=1640413899166, value=ravi                                                       
+ row2                                    column=personaldata:salary, timestamp=1640413954892, value=30000                                                    
+ row3                                    column=personaldata:city, timestamp=1640414845078, value=NEW DELHI                                                  
+ row3                                    column=personaldata:designation, timestamp=1640414437230, value=jr.engineer                                         
+ row3                                    column=personaldata:name, timestamp=1640414388113, value=rajesh                                                     
+ row3                                    column=personaldata:salary, timestamp=1640414455827, value=25000                                                    
+3 row(s) in 0.0670 seconds
+
+hbase(main):032:0> disable 'emp1'
+0 row(s) in 2.0790 seconds
+
+hbase(main):033:0> alter 'emp1', NAME=>'Employee history'                                                                                                    
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 1.2790 seconds
+
+hbase(main):034:0> enable 'emp1'
+0 row(s) in 2.0820 seconds
+
+hbase(main):035:0> describe 'emp1'
+DESCRIPTION                                                                                           ENABLED                                                
+ {NAME => 'emp1', FAMILIES => [{NAME => 'Employee history', DATA_BLOCK_ENCODING => 'NONE', BLOOMFILTE true                                                   
+ R => 'NONE', REPLICATION_SCOPE => '0', COMPRESSION => 'NONE', VERSIONS => '3', TTL => '2147483647',                                                         
+ MIN_VERSIONS => '0', KEEP_DELETED_CELLS => 'false', BLOCKSIZE => '65536', ENCODE_ON_DISK => 'true',                                                         
+ IN_MEMORY => 'false', BLOCKCACHE => 'true'}, {NAME => 'personaldata', DATA_BLOCK_ENCODING => 'NONE',                                                        
+  BLOOMFILTER => 'NONE', REPLICATION_SCOPE => '0', VERSIONS => '3', COMPRESSION => 'NONE', MIN_VERSIO                                                        
+ NS => '0', TTL => '2147483647', KEEP_DELETED_CELLS => 'false', BLOCKSIZE => '65536', IN_MEMORY => 'f                                                        
+ alse', ENCODE_ON_DISK => 'true', BLOCKCACHE => 'true'}, {NAME => 'professionaldata', DATA_BLOCK_ENCO                                                        
+ DING => 'NONE', BLOOMFILTER => 'NONE', REPLICATION_SCOPE => '0', VERSIONS => '3', COMPRESSION => 'NO                                                        
+ NE', MIN_VERSIONS => '0', TTL => '2147483647', KEEP_DELETED_CELLS => 'false', BLOCKSIZE => '65536',                                                         
+ IN_MEMORY => 'false', ENCODE_ON_DISK => 'true', BLOCKCACHE => 'true'}]}                                                                                     
+1 row(s) in 0.0580 seconds
+
+hbase(main):059:0> put 'emp1', 'row3', 'personaldata:city', '2bang'                                                                                          
+0 row(s) in 0.0050 seconds
+
+hbase(main):060:0> put 'emp1', 'row3', 'personaldata:city', '3kochi'                                                                                         
+0 row(s) in 0.0060 seconds
+
+hbase(main):061:0> scan 'emp1'                                                                                                                               
+ROW                                      COLUMN+CELL                                                                                                         
+ row1                                    column=personaldata:city, timestamp=1640416689108, value=hyderabad                                                  
+ row1                                    column=personaldata:designation, timestamp=1640416702322, value=manager                                             
+ row1                                    column=personaldata:name, timestamp=1640416670804, value=raju                                                       
+ row1                                    column=personaldata:salary, timestamp=1640416713909, value=50000                                                    
+ row2                                    column=personaldata:city, timestamp=1640416737516, value=chennai                                                    
+ row2                                    column=personaldata:designation, timestamp=1640416748420, value=sr.engineer                                         
+ row2                                    column=personaldata:name, timestamp=1640416727065, value=ravi                                                       
+ row2                                    column=personaldata:salary, timestamp=1640416758560, value=30000                                                    
+ row3                                    column=personaldata:city, timestamp=1640416890420, value=3kochi                                                     
+ row3                                    column=personaldata:designation, timestamp=1640416803315, value=jr.engineer                                         
+ row3                                    column=personaldata:name, timestamp=1640416771908, value=rajesh                                                     
+ row3                                    column=personaldata:salary, timestamp=1640416815164, value=25000                                                    
+3 row(s) in 0.0850 seconds
+
+hbase(main):062:0> get 'emp1','row3',{COLUMN=>'personaldata:city',VERSIONS=>3}
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640416890420, value=3kochi                                                                               
+ personaldata:city                       timestamp=1640416880416, value=2bang                                                                                
+ personaldata:city                       timestamp=1640416785024, value=delhi                                                                                
+3 row(s) in 0.0090 seconds
+
+hbase(main):063:0> get 'emp1','row3',{COLUMN=>'personaldata:city',VERSIONS=>2}                                                                               
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640416890420, value=3kochi                                                                               
+ personaldata:city                       timestamp=1640416880416, value=2bang                                                                                
+2 row(s) in 0.0050 seconds
+
+hbase(main):064:0> get 'emp1','row3',{COLUMN=>'personaldata:city',VERSIONS=>1}                                                                               
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640416890420, value=3kochi                                                                               
+1 row(s) in 0.0030 seconds
+
+hbase(main):065:0> get 'emp1','row3',{COLUMN=>'personaldata:city',VERSIONS=>4}                                                                               
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640416890420, value=3kochi                                                                               
+ personaldata:city                       timestamp=1640416880416, value=2bang                                                                                
+ personaldata:city                       timestamp=1640416785024, value=delhi                                                                                
+3 row(s) in 0.0050 seconds
+
+hbase(main):066:0> put 'emp1', 'row3', 'personaldata:city', '4dehraden'                                                                                      
+0 row(s) in 0.0060 seconds
+
+hbase(main):067:0> get 'emp1','row3',{COLUMN=>'personaldata:city',VERSIONS=>3}                                                                               
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640417024659, value=4dehraden                                                                            
+ personaldata:city                       timestamp=1640416890420, value=3kochi                                                                               
+ personaldata:city                       timestamp=1640416880416, value=2bang                                                                                
+3 row(s) in 0.0100 seconds
+
+hbase(main):068:0> disable 'emp1'
+0 row(s) in 2.0780 seconds
+
+hbase(main):004:0> alter 'emp1', NAME=>'xyz', VERSIONS=>3
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 1.1920 seconds
+
+hbase(main):005:0> enable 'emp1'
+0 row(s) in 2.0940 seconds
+
+hbase(main):006:0> describe 'emp1'
+DESCRIPTION                                                                                           ENABLED                                                
+ {NAME => 'emp1', FAMILIES => [{NAME => 'personaldata', DATA_BLOCK_ENCODING => 'NONE', BLOOMFILTER => true                                                   
+  'NONE', REPLICATION_SCOPE => '0', VERSIONS => '3', COMPRESSION => 'NONE', MIN_VERSIONS => '0', TTL                                                         
+ => '2147483647', KEEP_DELETED_CELLS => 'false', BLOCKSIZE => '65536', IN_MEMORY => 'false', ENCODE_O                                                        
+ N_DISK => 'true', BLOCKCACHE => 'true'}, {NAME => 'professionaldata', DATA_BLOCK_ENCODING => 'NONE',                                                        
+  BLOOMFILTER => 'NONE', REPLICATION_SCOPE => '0', VERSIONS => '3', COMPRESSION => 'NONE', MIN_VERSIO                                                        
+ NS => '0', TTL => '2147483647', KEEP_DELETED_CELLS => 'false', BLOCKSIZE => '65536', IN_MEMORY => 'f                                                        
+ alse', ENCODE_ON_DISK => 'true', BLOCKCACHE => 'true'}, {NAME => 'xyz', DATA_BLOCK_ENCODING => 'NONE                                                        
+ ', BLOOMFILTER => 'NONE', REPLICATION_SCOPE => '0', COMPRESSION => 'NONE', VERSIONS => '3', TTL => '                                                        
+ 2147483647', MIN_VERSIONS => '0', KEEP_DELETED_CELLS => 'false', BLOCKSIZE => '65536', ENCODE_ON_DIS                                                        
+ K => 'true', IN_MEMORY => 'false', BLOCKCACHE => 'true'}]}                                                                                                  
+1 row(s) in 0.0450 seconds
+
+hbase(main):007:0> put 'emp1','row3','xyz:city','1.chennai'
+0 row(s) in 0.0450 seconds
+
+hbase(main):008:0> put 'emp1','row3','xyz:city','2.mangalore'                                                                                                
+0 row(s) in 0.0070 seconds
+
+hbase(main):009:0> put 'emp1','row3','xyz:city','3.mumbai'                                                                                                   
+0 row(s) in 0.0040 seconds
+
+hbase(main):010:0> put 'emp1','row3','xyz:city','4.goa'                                                                                                      
+0 row(s) in 0.0050 seconds
+
+hbase(main):011:0> get 'emp1','row3',{COLUMN=>'xyz:city',VERSIONS=>2}                                                                                        
+COLUMN                                   CELL                                                                                                                
+ xyz:city                                timestamp=1640417587950, value=4.goa                                                                                
+ xyz:city                                timestamp=1640417549861, value=3.mumbai                                                                             
+2 row(s) in 0.0260 seconds
+
+hbase(main):012:0> get 'emp1','row3',{COLUMN=>'xyz:city',VERSIONS=>3}                                                                                        
+COLUMN                                   CELL                                                                                                                
+ xyz:city                                timestamp=1640417587950, value=4.goa                                                                                
+ xyz:city                                timestamp=1640417549861, value=3.mumbai                                                                             
+ xyz:city                                timestamp=1640417535511, value=2.mangalore                                                                          
+3 row(s) in 0.0080 seconds
+
+hbase(main):013:0> get 'emp1','row3',{COLUMN=>'xyz:city',VERSIONS=>4}                                                                                        
+COLUMN                                   CELL                                                                                                                
+ xyz:city                                timestamp=1640417587950, value=4.goa                                                                                
+ xyz:city                                timestamp=1640417549861, value=3.mumbai                                                                             
+ xyz:city                                timestamp=1640417535511, value=2.mangalore                                                                          
+3 row(s) in 0.0190 seconds
+
+hbase(main):014:0> disable 'emp1'                                                                                                                            
+0 row(s) in 2.1190 seconds
+
+hbase(main):019:0> alter 'emp1','delete'=>'xyz'
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 1.2080 seconds
+
+hbase(main):020:0> enable 'emp1'
+0 row(s) in 2.0610 seconds
+
+hbase(main):021:0> get 'emp1','row3'
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640417024659, value=4dehraden                                                                            
+ personaldata:designation                timestamp=1640416803315, value=jr.engineer                                                                          
+ personaldata:name                       timestamp=1640416771908, value=rajesh                                                                               
+ personaldata:salary                     timestamp=1640416815164, value=25000                                                                                
+4 row(s) in 0.0150 seconds
+
+
+hbase(main):037:0> delete 'emp1', 'row3', 'personaldata:name'
+0 row(s) in 0.0100 seconds
+
+hbase(main):038:0> get 'emp1', 'row3'
+COLUMN                                   CELL                                                                                                                
+ personaldata:city                       timestamp=1640414845078, value=NEW DELHI                                                                            
+ personaldata:designation                timestamp=1640414437230, value=jr.engineer                                                                          
+ personaldata:salary                     timestamp=1640414455827, value=25000                                                                                
+3 row(s) in 0.0260 seconds
+
+hbase(main):039:0> deleteall 'emp1','row3'                                                                                                                   
+0 row(s) in 0.0110 seconds
+
+hbase(main):040:0> get 'emp1','row3'
+COLUMN                                   CELL                                                                                                                
+0 row(s) in 0.0120 seconds
+
+hbase(main):041:0> disable 'emp1'
+0 row(s) in 2.1390 seconds
+
+hbase(main):042:0> drop 'emp1'
+0 row(s) in 1.0980 seconds
+
+hbase(main):043:0> list
+TABLE                                                                                                                                                        
+q                                                                                                                                                            
+1 row(s) in 0.0410 seconds
+ 
+hbase(main):022:0> create 'emp2','data1'
+0 row(s) in 1.0780 seconds
+
+=> Hbase::Table - emp2
+hbase(main):023:0> create 'emp3','data2'                                                                                                                     
+0 row(s) in 1.0860 seconds
+
+=> Hbase::Table - emp3
+hbase(main):024:0> list
+TABLE                                                                                                                                                        
+emp1                                                                                                                                                         
+emp2                                                                                                                                                         
+emp3                                                                                                                                                         
+q                                                                                                                                                            
+4 row(s) in 0.0820 seconds
+
+hbase(main):025:0> disable_all'em.*'
+emp1                                                                                                                                                         
+emp2                                                                                                                                                         
+emp3                                                                                                                                                         
+
+Disable the above 3 tables (y/n)?
+y
+3 tables successfully disabled
+
+hbase(main):026:0> drop_all'em.*'
+emp1                                                                                                                                                         
+emp2                                                                                                                                                         
+emp3                                                                                                                                                         
+
+Drop the above 3 tables (y/n)?
+y
+3 tables successfully dropped
+
+hbase(main):027:0> list
+TABLE                                                                                                                                                        
+q                                                                                                                                                            
+1 row(s) in 0.0420 seconds
+
+
+
+
+
+
+
+
+
+
